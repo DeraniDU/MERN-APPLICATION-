@@ -19,14 +19,42 @@ function PostDetails() {
   }, [id]); // Dependency on `id`, so it re-fetches when `id` changes
 
   if (!post) {
-    return <div>Loading...</div>; // Handle loading state
+    return (
+      <div className="container mt-5 text-center">
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+        <p>Loading...</p>
+      </div>
+    ); // Show loading state with spinner
   }
 
   return (
     <div className="container mt-5">
-      <h1>{post.title}</h1>
-      <p>{post.description}</p>
-      <p><strong>Category:</strong> {post.category}</p>
+      <div className="row">
+        <div className="col-md-8 offset-md-2">
+          <div className="card">
+            <div className="card-header bg-primary text-white">
+              <h3 className="card-title">{post.title}</h3>
+            </div>
+            <div className="card-body">
+              <h5 className="card-title">Description</h5>
+              <p className="card-text">{post.description}</p>
+              <hr />
+              <p><strong>Category:</strong> {post.category}</p>
+            </div>
+            <div className="card-footer text-right">
+              <button className="btn btn-warning">
+                <i className="fas fa-edit"></i> Edit
+              </button>
+              &nbsp;
+              <button className="btn btn-danger">
+                <i className="fas fa-trash-alt"></i> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
