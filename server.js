@@ -22,7 +22,7 @@ const DB_URI = 'mongodb+srv://deranindu:dd1234@clusternew.zgiye.mongodb.net/?ret
 // Connect to MongoDB
 mongoose.connect(DB_URI)
     .then(() => {
-        console.log('Connected to the database');
+        console.log('Database connection successful');
     })
     .catch((err) => {
         console.error('Error connecting to the database:', err.message);
