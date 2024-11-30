@@ -13,11 +13,15 @@ router.post('/post/save', async (req, res) => {
     try {
         const savedPost = await post.save();
         res.json({
+            success: true,  // Success flag
             message: "Post saved successfully!",
             data: savedPost
         });
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ 
+            success: false,  // Failure flag
+            message: err.message 
+        });
     }
 });
 

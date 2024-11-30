@@ -14,7 +14,7 @@ export default class App extends Component {
           <NavBar />
           {/* Wrap the Route components inside a Routes component */}
           <Routes>
-            <Route path="/" exact element={<Home />} /> {/* Use `element` to render the component */}
+            <Route path="/" element={<Home />} /> {/* No need for 'exact' in React Router v6 */}
             <Route path="/add" element={<CreatePost />} />
             <Route path="/edit/:id" element={<EditPost />} />
             <Route path="/post/:id" element={<PostDetails />} />
