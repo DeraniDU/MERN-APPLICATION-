@@ -5,19 +5,37 @@ import { Link } from 'react-router-dom'; // Import Link
 function Home() {
   const [posts, setPosts] = useState([]); // State to store posts
 
+  // Fetch posts when the component mounts
   useEffect(() => {
-    retrivePosts(); // Fetch posts when the component mounts
+    retrievePosts();
   }, []);
 
-  const retrivePosts = () => {
+  // Function to fetch posts
+  const retrievePosts = () => {
     axios
-      .get('/posts')
+      .get('/posts') // Make GET request to fetch posts from the server
       .then((response) => {
-        setPosts(response.data); // Set posts to state
+        setPosts(response.data); // Set posts in the state
       })
       .catch((error) => {
-        console.log(error); // Handle any errors
+        console.log(error); // Handle any errors during the API call
       });
+  };
+
+  // Function to delete a post
+  const deletePost = (id) => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      axios
+        .delete(`/posts/${id}`) // Send DELETE request to remove the post
+        .then((response) => {
+          alert(response.data.message); // Show success message
+          retrievePosts(); // Refresh the post list after deletion
+        })
+        .catch((error) => {
+          console.log(error);
+          alert('Error deleting post');
+        });
+    }
   };
 
   return (
@@ -46,13 +64,16 @@ function Home() {
                 <td>{post.description}</td>
                 <td>{post.category}</td>
                 <td>
-                  <a className="btn btn-warning" href="#">
+                  <Link to={`/edit/${post._id}`} className="btn btn-warning">
                     <i className="fas fa-edit"></i>&nbsp;Edit
-                  </a>
+                  </Link>
                   &nbsp;
-                  <a className="btn btn-danger" href="#">
+                  <button 
+                    className="btn btn-danger" 
+                    onClick={() => deletePost(post._id)}
+                  >
                     <i className="fas fa-trash-alt"></i>&nbsp;Delete
-                  </a>
+                  </button>
                 </td>
               </tr>
             ))}
