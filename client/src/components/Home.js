@@ -64,10 +64,12 @@ function Home() {
                 <td>{post.description}</td>
                 <td>{post.category}</td>
                 <td>
+                  {/* Edit Link */}
                   <Link to={`/edit/${post._id}`} className="btn btn-warning">
                     <i className="fas fa-edit"></i>&nbsp;Edit
                   </Link>
                   &nbsp;
+                  {/* Delete Button */}
                   <button 
                     className="btn btn-danger" 
                     onClick={() => deletePost(post._id)}
