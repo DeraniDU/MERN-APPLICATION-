@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 
 function Home() {
-  const [posts, setPosts] = useState([]); // State to store posts
+  const [posts, setPosts] = useState([]); // State to store all posts
+  const [searchQuery, setSearchQuery] = useState(''); // State to store search query
 
   // Fetch posts when the component mounts
   useEffect(() => {
@@ -38,9 +39,26 @@ function Home() {
     }
   };
 
+  // Function to filter posts based on search query
+  const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="container mt-5">
       <h1 className="text-center mb-4">All Posts</h1>
+
+      {/* Search Bar */}
+      <div className="mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search by title..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+        />
+      </div>
+
       <div className="table-responsive">
         <table className="table table-striped table-bordered mx-auto">
           <thead>
@@ -53,7 +71,7 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {posts.map((post, index) => (
+            {filteredPosts.map((post, index) => (
               <tr key={post._id}>
                 <th scope="row">{index + 1}</th>
                 <td>
